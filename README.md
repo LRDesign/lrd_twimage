@@ -1,16 +1,19 @@
 # Twimage
 
+This is LRD's fork of twimage by Rob Cameron.   Our fork adds support for lockerz.com image service, and fixes a
+problem we ran into on some twitpic images.
+
 Twimage provides an easy way to pull raw images from the various Twitter photo image services (twitpic, yfrog, etc.)
 
 ## Usage
 
 Add twimage to your Gemfile:
 
-    gem 'twimage'
+    gem 'lrd_twimage'
     
 Of without bundler:
 
-    gem install twimage
+    gem install lrd_twimage
     
 Now simply take the standard URL that is posted to Twitter and tell Twimage to go get it:
 
@@ -32,11 +35,12 @@ Enjoy!
 
 ## Support
 
-Twimage currently supports the following services:
+LRDTwimage currently supports the following services:
 
 * twitpic - http://twitpic.com
 * yfrog - http://yfrog.com
 * instagram - http://instagr.am
+* lockerz - http://lockerz.com
 
 ## Contributing
 

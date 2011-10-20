@@ -3,14 +3,14 @@ $:.push File.expand_path("../lib", __FILE__)
 require "twimage/version"
 
 Gem::Specification.new do |s|
-  s.name        = "twimage"
+  s.name        = "lrd_twimage"
   s.version     = Twimage::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ["Rob Cameron"]
-  s.email       = ["cannikinn@gmail.com"]
+  s.authors     = ["Evan Dorn", "Rob Cameron"]
+  s.email       = ["evan@lrdesign.com"]
   s.homepage    = ""
   s.summary     = %q{A gem for pulling images from various Twitter image services}
-  s.description = %q{This gem will programatically grab images from a bunch of the most used Twitter image services}
+  s.description = %q{This gem will programatically grab images from a bunch of the most used Twitter image services.}
 
   s.rubyforge_project = "twimage"
 

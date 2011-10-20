@@ -8,7 +8,11 @@ module Twimage
       @service_url  = options[:service_url]
       @image_url    = options[:image_url]
       
-      extension = @image_url.match(/(\.\w+)(\?|$)/)[1]
+      begin
+        extension = @image_url.match(/(\.\w+)(\?|$)/)[1]
+      rescue NoMethodError
+        extension = '.jpg'    # Lockerz does not put extensions or mime types on their images.
+      end
       @tempfile = Tempfile.new(['twimage', extension])
       @tempfile << options[:image]
     end

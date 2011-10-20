@@ -24,15 +24,28 @@ module Twimage
                 :image_css_match => '#the-image img' },
               { :name => :instagram,
                 :service_match => [/instagr\.am/, /instagram\.com/],
-                :image_css_match => '.photo'}]
+                :image_css_match => '.photo'},
+              { :name => :lockerz,
+                :service_match => /lockerz\.com/,
+                :image_css_match => '#photo' }
+  ]
                   
   def self.get(url)
     service_url = HTTParty.get(url, :headers => { 'User-Agent' => USER_AGENT }).request.path.to_s                                                                 # first point HTTParty at this URL and follow any redirects to get to the final page
     service = find_service(service_url)                                                                               # check the resulting service_url for which service we're hitting
     full_res_service_url = service[:full_url_modifier] ? service[:full_url_modifier].call(service_url) : service_url  # get the full res version of the service_url
+    #debugger
     image_url = get_image_url(service, full_res_service_url)                                                          # get the URL to the image
+    #debugger
     image = get_image(image_url)                                                                                      # get the image itself
-    
+    #debugger
+    p({
+      :url => url,
+      :image_url => image_url,
+      :service_url => service_url      
+    })
+
+
     return Image.new(:service => service[:name], :service_url => service_url, :image_url => image_url, :image => image)
   end
   
@@ -58,15 +71,24 @@ module Twimage
     
     # get the URL to the actual image file
     if image_tag
-      return image_tag['src']
+      return enforce_protocol(image_tag['src'])
     else
       raise ImageNotFound, "The service URL #{url} did not contain an identifiable image"
+    end
+  end
+
+  def self.enforce_protocol(url)
+    if url =~ /^http/
+      url
+    elsif url =~ /^\/\//
+      "http:" + url 
     end
   end
   
 
   # download the actual image and put into a tempfile
   def self.get_image(url)
+    #debugger
     # get the image itself
     response = HTTParty.get(url, :headers => { 'User-Agent' => USER_AGENT })
     if response.code == 200
